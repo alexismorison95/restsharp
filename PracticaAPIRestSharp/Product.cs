@@ -16,7 +16,7 @@ namespace PracticaAPIRestSharp
         public string Name { get; set; }
     }
 
-    public class CreateProduct
+    public class CreateOrUpdateProduct
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }
@@ -39,5 +39,22 @@ namespace PracticaAPIRestSharp
         [JsonPropertyName("createdAt")]
         public DateTime CreatedAt { get; set; }
     }
+
+
+    public class UpdatedProduct
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+
+        [JsonPropertyName("price")]
+        public string Price { get; set; }
+
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        [JsonPropertyName("updatedAt")]
+        public DateTime UpdatedAt { get; set; }
+    }
+
 }
 

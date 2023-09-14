@@ -55,13 +55,13 @@ Console.WriteLine($"ExecuteGetAsync - id: {data2.Id}, name: {data2.Name}");
 var request3 = new RestRequest("products", Method.Post);
 
 //creo el body
-var body = new CreateProduct
+var body = new CreateOrUpdateProduct
 {
     Name = "test",
     Price = "19.5"
 };
 
-//agrego el objecto CreateProduct al body
+//agrego el objecto CreateOrUpdateProduct al body
 request3.AddBody(body);
 
 //ejecución de consulta a API sin necesidad de deserealizar el json
@@ -70,8 +70,23 @@ var response3 = await client.PostAsync<CreatedProduct>(request3);
 Console.WriteLine($"PostAsync - id: {response3.Id}, name: {response3.Name}, price: {response3.Price}, createdAt: {response3.CreatedAt.ToString("dd/MM/yyyy hh:mm:ss")}");
 
 
+//Solicitud UPDATE
+var request4 = new RestRequest("products/1", Method.Put);
 
+var product = data.First();
 
+//creo el body
+var body2 = new CreateOrUpdateProduct
+{
+    Name = product.Name,
+    Price = "21.3"
+};
 
+request4.AddBody(body2);
+
+//ejecución de consulta a API sin necesidad de deserealizar el json
+var response4 = await client.PutAsync<UpdatedProduct>(request4);
+
+Console.WriteLine($"PutAsync - id: {response4.Id}, name: {response4.Name}, price: {response4.Price}, updatedAt: {response4.UpdatedAt.ToLocalTime().ToString("dd/MM/yyyy hh:mm:ss")}");
 
 Console.ReadLine();

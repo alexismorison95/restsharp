@@ -39,8 +39,39 @@ var request2 = new RestRequest($"products/{id}");
 //ejecuto la consulta a la API y obtengo la respuesta
 var response2 = await client.ExecuteGetAsync(request2);
 
+//ejecución de consulta a API sin necesidad de deserealizar el json
+var response2_2 = await client.GetAsync<Product>(request2);
+
+Console.WriteLine($"GetAsync - id: {response2_2.Id}, name: {response2_2.Name}");
+
 
 //transformo el string Json en un producto
 var data2 = JsonSerializer.Deserialize<Product>(response2.Content!)!;
 
-Console.WriteLine($"id: {data2.Id}, name: {data2.Name}");
+Console.WriteLine($"ExecuteGetAsync - id: {data2.Id}, name: {data2.Name}");
+
+
+//Solicitud POST
+var request3 = new RestRequest("products", Method.Post);
+
+//creo el body
+var body = new CreateProduct
+{
+    Name = "test",
+    Price = "19.5"
+};
+
+//agrego el objecto CreateProduct al body
+request3.AddBody(body);
+
+//ejecución de consulta a API sin necesidad de deserealizar el json
+var response3 = await client.PostAsync<CreatedProduct>(request3);
+
+Console.WriteLine($"PostAsync - id: {response3.Id}, name: {response3.Name}, price: {response3.Price}, createdAt: {response3.CreatedAt.ToString("dd/MM/yyyy hh:mm:ss")}");
+
+
+
+
+
+
+Console.ReadLine();
